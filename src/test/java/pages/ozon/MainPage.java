@@ -1,6 +1,7 @@
 package pages.ozon;
 
 import static com.codeborne.selenide.appium.SelenideAppium.$;
+import static com.codeborne.selenide.appium.SelenideAppium.back;
 
 import static helpers.EmulatorHelper.pressSearch;
 
@@ -17,6 +18,7 @@ public class MainPage {
     private final SelenideAppiumElement mainMenuButton = $(AppiumBy.id("ru.ozon.app.android:id/menu_main"));
 
     public MainPage(){
+        closePopUp();
         mainMenuButton.should(Condition.selected);
     }
 
@@ -26,6 +28,13 @@ public class MainPage {
         searchFieldExpanded.setValue(item);
         pressSearch();
         return new SearchResultsPage(item, count);
+    }
+
+    @Step("Закрыть вспывающее окно, если появилось")
+    public void closePopUp(){
+        if(!mainMenuButton.is(Condition.visible)){
+            back();
+        }
     }
 
 }

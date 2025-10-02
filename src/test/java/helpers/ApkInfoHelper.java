@@ -2,11 +2,10 @@ package helpers;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static config.Properties.PROP;
 import static helpers.DeviceHelper.executeSh;
+import static helpers.Utils.findGroup1ValueFromString;
 
 public class ApkInfoHelper {
     private final String apkInfo;
@@ -30,14 +29,5 @@ public class ApkInfoHelper {
 
     public String getAppMainActivity()  {
         return findGroup1ValueFromString(apkInfo, "launchable-activity: name='\\s*([^']+?)\\s*'");
-    }
-
-    private static String findGroup1ValueFromString(String text, String regex){
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(text);
-        if(matcher.find()){
-            return matcher.group(1);
-        }
-        return null;
     }
 }

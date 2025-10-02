@@ -43,5 +43,8 @@ public class Properties {
 
         @Key("appActivity")
         String getAppActivity();
+
+        @Key("vpnAppPackage")
+        String getVpnAppPackage();
     }
 }

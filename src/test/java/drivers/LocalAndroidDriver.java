@@ -1,12 +1,8 @@
 package drivers;
 
-import static com.codeborne.selenide.Selenide.webdriver;
-
 import com.codeborne.selenide.WebDriverProvider;
 import helpers.ApkInfoHelper;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.nativekey.AndroidKey;
-import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.android.options.UiAutomator2Options;
 
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +18,6 @@ import static config.Properties.PROP;
 import static io.appium.java_client.remote.AutomationName.ANDROID_UIAUTOMATOR2;
 
 public class LocalAndroidDriver implements WebDriverProvider{
-    protected static AndroidDriver driver;
 
     private void initPackageAndActivity() {
         ApkInfoHelper helper = new ApkInfoHelper();
@@ -47,11 +42,13 @@ public class LocalAndroidDriver implements WebDriverProvider{
         options.setNewCommandTimeout(Duration.ofSeconds(1100));
         options.setFullReset(false);
         options.setApp(new File(PROP.getAppPath()).getAbsolutePath());
-        options.setAppPackage(PROP.getAppPackage());
-        options.setAppActivity(PROP.getAppActivity());
+        options.setAppPackage(System.getProperty("appPackage"));
+        options.setAppActivity(System.getProperty("appActivity"));
 
         try {
-            return driver = new AndroidDriver(new URL(PROP.getLocalUrl()), options);
+            AndroidDriver driver = new AndroidDriver(new URL(PROP.getLocalUrl()), options);
+            DriverManager.setDriver(driver);
+            return driver;
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }

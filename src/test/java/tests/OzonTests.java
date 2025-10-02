@@ -1,6 +1,7 @@
 package tests;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Tag;
@@ -12,6 +13,11 @@ import pages.ozon.MainPage;
 
 @Tag("Ozon")
 public class OzonTests extends BaseTest {
+
+    @BeforeAll
+    static void setApp(){
+        System.setProperty("appName", "Ozon");
+    }
 
     @RepeatedTest(5)
     @DisplayName("Добавления найденного товара в корзину")
